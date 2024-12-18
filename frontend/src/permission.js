@@ -9,10 +9,6 @@ NProgress.configure({ showSpinner: false })
 
 const whiteList = ['/login', '/register'
   ,'/public/page'
-  // ,"/bigscreen/preview"
-  // ,"/bigScreen/chart/data/list"
-  // ,"/bigScreen/design/info/code/**"
-  // ,"/bigScreen/permission/check/**"
 ]
 
 router.beforeEach((to, from, next) => {
