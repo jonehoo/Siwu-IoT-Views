@@ -43,7 +43,6 @@ const typeList = [
 ];
 let basicConfigList = [];
 basicConfigList = typeList.map((type) => {
-  console.log('getComponentConfig(type): ', getComponentConfig(type));
 
   return getComponentConfig(type);
 });

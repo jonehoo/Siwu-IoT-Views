@@ -110,7 +110,6 @@ export default {
     },
     chooseImg(img) {
       this.focus = cloneDeep(img)
-      console.log('2选择的图片。。。。。: ', this.focus);
     },
     close() { },
     init() {
@@ -126,7 +125,6 @@ export default {
     confirm() {
       this.dialogVisible = false
       if (this.focus !== -1) {
-        console.log('3提交图片数据到其他组件。。。。: ', this.focus);
         this.$emit('change', this.focus)
         this.$emit('getImg', this.focus)
       }
@@ -144,7 +142,6 @@ export default {
       })
         .then((data) => {
           this.list = data.list
-          console.log('1资源列表 : ', data.list);
           this.totalCount = data.totalCount
         })
         .finally(() => {
@@ -156,7 +153,6 @@ export default {
       this.$dataRoomAxios.get('/bigScreen/type/list/resourceCatalog')
         .then((data) => {
           this.options = data
-          console.log('1获取目录的列表: ', data);
         })
         .catch(() => { })
     },
@@ -166,7 +162,6 @@ export default {
      * @returns {*}
      */
     getCoverPicture(url) {
-      // console.log('url: ', getFileUrl(url));
       return getFileUrl(url)
     },
   }

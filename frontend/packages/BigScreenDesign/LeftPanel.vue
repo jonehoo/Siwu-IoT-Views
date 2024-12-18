@@ -151,13 +151,13 @@ export default {
           icon: 'icon-tupian',
           components: []
         },
-        {
-          id: 6,
-          name: 'configuration',
-          title: '组态',
-          icon: 'icon-zujian',
-          components: configurationComponents
-        },
+        // {
+        //   id: 6,
+        //   name: 'configuration',
+        //   title: '组态',
+        //   icon: 'icon-zujian',
+        //   components: configurationComponents
+        // },
         {
           id: 7,
           name: 'echart',
@@ -196,7 +196,7 @@ export default {
     this.initList()
     this.g2PlotComponents = [...this.g2PlotComponents, ...getCustomPlots()]
     this.menuList[1].components = this.g2PlotComponents
-    this.menuList[6].components = this.echartsComponents
+    this.menuList[5].components = this.echartsComponents
   },
   mounted() {
     this.nodeDrag()
@@ -260,13 +260,11 @@ export default {
         this.currentActive = this.activeName
       }
       if (tab.name === 'source') {
-        console.log('。。。。。。。。。。。。。。。。。。source调用了。。。。。。。。。 ');
         this.fold = true
         this.$emit('toggleLeftSidebar')
         this.$emit('openResource')
       }
       if (tab.name === 'component') {
-        console.log('.。。。。。。。。。。。。。。。。。。component调用了。。。。。。。。。 ');
         this.fold = true
         this.$emit('toggleLeftSidebar')
         this.$emit('openComponent')

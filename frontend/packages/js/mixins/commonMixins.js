@@ -119,7 +119,6 @@ export default {
      */
     chartInit() {
       let config = this.config
-      console.log('this.config: ', this.config);
       // key和code相等，说明是一进来刷新，调用list接口
       if (this.isPreview) {
         // 改变样式
@@ -175,15 +174,7 @@ export default {
               // 订阅指定主题
                let produceTopic = res.data.topic;
               this.mqttClient.subscribe(produceTopic, (topic, data) => {
-                // console.log(`收到主题 ${topic} 的消息`);
-                // if (topic === produceTopic) {
-                //   // 处理收到的消息
-                //   let JsonData = JSON.parse(data.toString());
-                //   _res = this.httpDataFormatting(res, JsonData.data);
-                //   config = this.dataFormatting(config, _res);
-                //   // 每次数据更新后，重新渲染图表
-                //   this.chart.changeData(config.option.data);
-                // }
+                
                 if (topic === produceTopic) {
                   // 处理收到的消息
                   let JsonData = JSON.parse(data.toString());
@@ -203,7 +194,6 @@ export default {
                     try {
                       this.chart.changeData(config.option.data);
                     } catch (error) {
-                      console.log("Error changing data:", error);
                     }
                   }
                 }

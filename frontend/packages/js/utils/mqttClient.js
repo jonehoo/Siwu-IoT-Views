@@ -19,20 +19,15 @@ class MqttClient {
     });
 
     this.client.on('connect', () => {
-      console.log('mqtt 已经连接成功');
     });
 
     this.client.on('reconnect', () => {
-      console.log("mqtt reconnect");
     });
 
     this.client.on('offline', () => {
-      console.log("mqtt offline");
     });
 
     this.client.on('error', (error) => {
-      console.log("mqtt error");
-      console.log(error);
     });
   }
 
@@ -41,18 +36,14 @@ class MqttClient {
     if (this.client) {
       this.client.subscribe(topic, (err) => {
         if (!err) {
-          console.log(`mqtt 订阅主题 ${topic} 成功`);
         } else {
-          console.log(`mqtt 订阅主题 ${topic} 失败`);
         }
       });
 
       this.client.on('message', (topic, message) => {
-        console.log(`mqtt 收到来自 ${topic} 的消息`);
         callback(topic, message);
       });
     } else {
-      console.error('MQTT client is not connected');
     }
   }
 
@@ -60,7 +51,6 @@ class MqttClient {
   disconnect() {
     if (this.client) {
       this.client.end();
-      console.log('mqtt 连接已断开');
     }
   }
 }
