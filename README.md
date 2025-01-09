@@ -124,4 +124,4 @@
 
 ## ⛳️ 联系方式（微信：Jonehoo）
 
-<img width="200px" src="https://vip.123pan.cn/1842051082/ymjew503t0n000d5qavf4poshaykvoo2DIYxDqayDIa1Dpx0Dday.jpg"/>
+<img width="200px" src="https://sv.jinhuwl.top:5743/prod-api/static/gitee/wechat.jpg"/>
