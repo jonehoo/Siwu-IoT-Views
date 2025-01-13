@@ -1,0 +1,107 @@
+<template>
+  <div id="glb"></div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      scene: null,
+      camera: null,
+      renderer: null,
+      model: null,
+      controls: null, // 用于存储 OrbitControls 实例
+    };
+  },
+  mounted() {
+    this.initThreeJS();
+  },
+  methods: {
+    // 初始化 Three.js
+    initThreeJS() {
+      // 设置场景、相机和渲染器
+      this.scene = new THREE.Scene();
+      this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      this.renderer = new THREE.WebGLRenderer();
+      this.renderer.setSize(window.innerWidth, window.innerHeight);
+      document.getElementById("glb").appendChild(this.renderer.domElement);  // 渲染到 #glb 元素
+
+      // 加载 HDR 天空纹理
+      const rgbeLoader = new THREE.RGBELoader();
+      rgbeLoader.load(
+        "https://sv.jinhuwl.top:5743/prod-api/static/sky.hdr", // 天空 HDR 图片地址
+        (texture) => {
+          texture.mapping = THREE.EquirectangularReflectionMapping;
+          this.scene.background = texture;
+          this.scene.environment = texture;
+        },
+        undefined, // 进度回调
+        (error) => {
+          console.error("天空加载失败:", error);
+        }
+      );
+
+      // 加载 3D 模型
+      const loader = new THREE.GLTFLoader();
+      loader.load(
+        "https://sv.jinhuwl.top:5743/prod-api/static/工厂.glb", // 模型地址
+        (gltf) => {
+          // 将加载的模型添加到场景中
+          this.model = gltf.scene;
+          gltf.scene.scale.set(1, 1, 1);
+          this.scene.add(this.model);
+        },
+        undefined, // 进度回调
+        (error) => {
+          console.error("模型加载失败:", error);
+        }
+      );
+
+      // 相机位置
+      this.camera.position.z = 5;
+      this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1200);
+      this.camera.position.set(-78, 33, 0.3);
+
+      // 初始化 OrbitControls
+      this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
+      this.controls.enableDamping = true; // 开启阻尼效果，使旋转更平滑
+      this.controls.dampingFactor = 0.25; // 设置阻尼系数
+      this.controls.screenSpacePanning = false; // 禁止平移模式切换
+      this.controls.maxPolarAngle = Math.PI / 2; // 限制上下旋转角度
+
+      // 渲染循环
+      const animate = () => {
+        requestAnimationFrame(animate);
+        // 更新 OrbitControls 控制器
+        this.controls.update(); // 必须在每帧更新控制器
+
+        this.renderer.render(this.scene, this.camera);
+      };
+
+      animate();
+    },
+
+    // 窗口尺寸变化时，调整渲染器和相机
+    onWindowResize() {
+      this.camera.aspect = window.innerWidth / window.innerHeight;
+      this.camera.updateProjectionMatrix();
+      this.renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.onWindowResize);
+  }
+};
+</script>
+
+<style scoped>
+body {
+  margin: 0;
+  overflow: hidden;
+}
+#glb {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+</style>

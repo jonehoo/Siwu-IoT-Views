@@ -1,5 +1,5 @@
 <p align="center">
-	<img alt="logo" src="https://oss.jinhuwl.top/swiot/logo.png" width="100" />
+	<img alt="logo" src="./gitee/logo.png" width="100" />
 </p>
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">Siwu-IoT-Views v3.8.8</h1>
 <h4 align="center">基于RuoYi-Vue 3.8.8和Dataroom 2.0.0 集成开发的物联网可视化平台</h4>
@@ -88,40 +88,40 @@
 
 <table>
     <tr>
-        <td><img src="https://sv.jinhuwl.top:5743/prod-api/static/gitee/登录.png"/></td>
-        <td><img src="https://sv.jinhuwl.top:5743/prod-api/static/gitee/用户中心.png"/></td>
+        <td><img src="./gitee/登录.png"/></td>
+        <td><img src="./gitee/用户中心.png"/></td>
     </tr>
     <tr>
-        <td><img src="https://sv.jinhuwl.top:5743/prod-api/static/gitee/用户管理.png"/></td>
-        <td><img src="https://sv.jinhuwl.top:5743/prod-api/static/gitee/在线用户.png"/></td>
+        <td><img src="./gitee/用户管理.png"/></td>
+        <td><img src="./gitee/在线用户.png"/></td>
     </tr>
     <tr>
-        <td><img src="https://sv.jinhuwl.top:5743/prod-api/static/gitee/角色管理.png"/></td>
-        <td><img src="https://sv.jinhuwl.top:5743/prod-api/static/gitee/角色权限管理.png"/></td>
+        <td><img src="./gitee/角色管理.png"/></td>
+        <td><img src="./gitee/角色权限管理.png"/></td>
     </tr>
 	<tr>
-        <td><img src="https://sv.jinhuwl.top:5743/prod-api/static/gitee/大屏权限管理.png"/></td>
-        <td><img src="https://sv.jinhuwl.top:5743/prod-api/static/gitee/大屏设计页面.png"/></td>
+        <td><img src="./gitee/大屏权限管理.png"/></td>
+        <td><img src="./gitee/大屏设计页面.png"/></td>
     </tr>	 
     <tr>
-        <td><img src="https://sv.jinhuwl.top:5743/prod-api/static/gitee/地图数据.png"/></td>
-        <td><img src="https://sv.jinhuwl.top:5743/prod-api/static/gitee/高代码自定义组件.png"/></td>
+        <td><img src="./gitee/地图数据.png"/></td>
+        <td><img src="./gitee/高代码自定义组件.png"/></td>
     </tr>
 	<tr>
-        <td><img src="https://sv.jinhuwl.top:5743/prod-api/static/gitee/数据源添加.png"/></td>
-        <td><img src="https://sv.jinhuwl.top:5743/prod-api/static/gitee/数据接口添加.png"/></td>
+        <td><img src="./gitee/数据源添加.png"/></td>
+        <td><img src="./gitee/数据接口添加.png"/></td>
     </tr>
 	<tr>
-        <td><img src="https://sv.jinhuwl.top:5743/prod-api/static/gitee/数据接口配置.png"/></td>
-        <td><img src="https://sv.jinhuwl.top:5743/prod-api/static/gitee/数据接口管理.png"/></td>
+        <td><img src="./gitee/数据接口配置.png"/></td>
+        <td><img src="./gitee/数据接口管理.png"/></td>
     </tr>
     <tr>
-        <td><img src="https://sv.jinhuwl.top:5743/prod-api/static/gitee/物联网案例.png"/></td>
-        <td><img src="https://sv.jinhuwl.top:5743/prod-api/static/gitee/流媒体组件测试.png"/></td>
+        <td><img src="./gitee/物联网案例.png"/></td>
+        <td><img src="./gitee/流媒体组件测试.png"/></td>
     </tr>
 </table>
 
 
 ## ⛳️ 联系方式（微信：Jonehoo）
 
-<img width="200px" src="https://sv.jinhuwl.top:5743/prod-api/static/gitee/wechat.jpg"/>
+<img width="200px" src="./gitee/wechat.jpg"/>
