@@ -1,5 +1,5 @@
 <p align="center">
-	<img alt="logo" src="gitee/logo.png" width="100" />
+	<img alt="logo" src="./gitee/logo.png" width="100" />
 </p>
 <h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">Siwu-IoT-Views v3.8.8</h1>
 <h4 align="center">基于RuoYi-Vue 3.8.8和Dataroom 2.0.0 集成开发的物联网可视化平台</h4>
