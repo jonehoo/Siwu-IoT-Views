@@ -8,7 +8,7 @@
 	<a  href='https://gitee.com/jonehoo/Siwu-IoT-Views/stargazers'><img src='https://gitee.com/jonehoo/Siwu-IoT-Views/badge/star.svg?theme=dark' alt='star'></img></a>
 	<a  href='https://gitee.com/jonehoo/Siwu-IoT-Views/members'><img src='https://gitee.com/jonehoo/Siwu-IoT-Views/badge/fork.svg?theme=dark' alt='fork'></img></a>
     <img alt="Static Badge" src="https://img.shields.io/badge/license%20-%20Apache2.0%20-red?color=%230e80c1">
-    <a href="https://sv.jinhuwl.top:5743"><img alt="Static Badge" src="https://img.shields.io/badge/%E9%A2%84%E8%A7%88%20-%20%E6%BC%94%E7%A4%BA%E7%8E%AF%E5%A2%83%20-red?color=%2322b130"></a>
+    <a href="https://bi.jinhuwl.top"><img alt="Static Badge" src="https://img.shields.io/badge/%E9%A2%84%E8%A7%88%20-%20%E6%BC%94%E7%A4%BA%E7%8E%AF%E5%A2%83%20-red?color=%2322b130"></a>
 </p>
 <h4 align="center"> 喜欢的话，给个 Star ⭐️ 吧！</h4>
 
