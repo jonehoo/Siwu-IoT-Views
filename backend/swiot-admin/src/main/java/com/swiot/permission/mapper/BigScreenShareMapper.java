@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
 @Mapper
-public interface BigScreenShareMapper  extends BaseMapper<BigScreenShare> {
+public interface BigScreenShareMapper extends BaseMapper<BigScreenShare> {
     // 根据 create_by 查询大屏 code 列表
     List<String> selectCodeListByCreateBy(String createBy);
 }

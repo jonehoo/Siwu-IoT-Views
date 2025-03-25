@@ -1,6 +1,8 @@
 package com.swiot.permission;
 
 import com.gccloud.dataroom.core.permission.IDataRoomPermissionService;
+import com.swiot.common.core.domain.model.LoginUser;
+import com.swiot.common.utils.SecurityUtils;
 import com.swiot.permission.service.CodeBigScreenPageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,22 +28,29 @@ public class CodePermissionServiceImpl implements IDataRoomPermissionService {
      */
     @Override
     public List<String> filterByPermission(List<String> allCode) {
-
-        // 入参allCode是原先符合大屏查询条件的大屏code列表
-        List<String> res = bigScreenPageService.getUserDataRoomCodeListByCreateBy(getUsername());
-        List<String> res_share = bigScreenPageService.getUserDataRoomCodeListFromShareByCreateBy(getUsername());
-        //如果 res 或 res_share 为空，则可以直接返回 allCode
-        if (res == null || res_share == null || allCode == null) {
+        // 获取当前用户的权限
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+        Set<String> permissions = loginUser.getPermissions();
+        if (permissions.contains("*:*:*")) {
+            // 若依的全部权限标识
+            return allCode;
+        }else{
+            // 入参allCode是原先符合大屏查询条件的大屏code列表
+            List<String> res = bigScreenPageService.getUserDataRoomCodeListByCreateBy(getUsername());
+            List<String> res_share = bigScreenPageService.getUserDataRoomCodeListFromShareByCreateBy(getUsername());
+            //如果 res 或 res_share 为空，则可以直接返回 allCode
+            if (res == null || res_share == null || allCode == null) {
+                return allCode;
+            }
+            //使用 LinkedHashSet 来保持插入顺序
+            Set<String> mergedSet = new LinkedHashSet<>();
+            mergedSet.addAll(res);
+            mergedSet.addAll(res_share);
+            // 转换回 List
+            List<String> mergedList = new ArrayList<>(mergedSet);
+            allCode.retainAll(mergedList);
             return allCode;
         }
-        //使用 LinkedHashSet 来保持插入顺序
-        Set<String> mergedSet = new LinkedHashSet<>();
-        mergedSet.addAll(res);
-        mergedSet.addAll(res_share);
-        // 转换回 List
-        List<String> mergedList = new ArrayList<>(mergedSet);
-        allCode.retainAll(mergedList);
-        return allCode;
     }
 
 
