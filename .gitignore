@@ -48,3 +48,4 @@ nbdist/
 
 application-ali.yml
 application-prod.yml
+frontend/.history/*

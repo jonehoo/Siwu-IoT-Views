@@ -70,7 +70,7 @@ export default {
       isDragging: false, // 是否正在拖拽
       startX: 0, // 拖拽起始 X 坐标
       startY: 0 // 拖拽起始 Y 坐标
-    }
+    }    
   },
   computed: {
     // 画布样式
