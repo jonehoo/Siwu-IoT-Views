@@ -25,7 +25,7 @@ module.exports = {
     open: true,
     proxy: {
       [process.env.VUE_APP_BASE_API]: {
-        target: `http://localhost:9712`,
+        target: `http://localhost:9712/`,
         changeOrigin: true,
         pathRewrite: {
           ["^" + process.env.VUE_APP_BASE_API]: "",
@@ -42,7 +42,7 @@ module.exports = {
     },
   },
   configureWebpack: {
-    name: name,
+    name: name,  
     resolve: {
       extensions: ['.js', '.vue', '.json', '.mjs'], // 支持 .mjs 文件
       alias: {

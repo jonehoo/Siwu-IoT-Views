@@ -210,11 +210,15 @@ export default {
     },
     // 组件联动
     changeValue (val) {
+      console.log('val: ', val);
+
       // 判断如果val是数组，需要将它转成字符串
       if (Array.isArray(val)) {
         val = val.join(',')
       }
-      this.linkage({ [this.config.code]: val })
+      // this.linkage({ [this.config.code]: val })
+      //20250512修改数据联动
+      this.linkage({ [this.config.code]: [val] })
     },
     focusEvent () {
       this.$nextTick(() => {

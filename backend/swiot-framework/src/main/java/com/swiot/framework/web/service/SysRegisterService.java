@@ -40,9 +40,11 @@ public class SysRegisterService
      */
     public String register(RegisterBody registerBody)
     {
-        String msg = "", username = registerBody.getUsername(), password = registerBody.getPassword();
+        String msg = "", username = registerBody.getUsername(),nickname = registerBody.getNickname(), password = registerBody.getPassword();
         SysUser sysUser = new SysUser();
         sysUser.setUserName(username);
+
+        sysUser.setNickName(nickname);
 
         // 验证码开关
         boolean captchaEnabled = configService.selectCaptchaEnabled();
@@ -75,7 +77,7 @@ public class SysRegisterService
         }
         else
         {
-            sysUser.setNickName(username);
+            sysUser.setNickName(nickname);
             sysUser.setPassword(SecurityUtils.encryptPassword(password));
             boolean regFlag = userService.registerUser(sysUser);
             if (!regFlag)

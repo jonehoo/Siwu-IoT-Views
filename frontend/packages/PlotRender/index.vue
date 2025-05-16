@@ -1,13 +1,7 @@
 <template>
-  <div
-    style="width: 100%;height: 100%"
-    class="bs-design-wrap bs-custom-component"
-    :class="{'light-theme':customTheme === 'light','auto-theme':customTheme !=='light'}"
-  >
-    <div
-      :id="chatId"
-      style="width: 100%;height: 100%"
-    />
+  <div style="width: 100%;height: 100%" class="bs-design-wrap bs-custom-component"
+    :class="{ 'light-theme': customTheme === 'light', 'auto-theme': customTheme !== 'light' }">
+    <div :id="chatId" style="width: 100%;height: 100%" />
     <!--    <span style="color:#ffffff">{{config.option.data}}</span>-->
   </div>
 </template>
@@ -31,7 +25,7 @@ export default {
       default: () => ({})
     }
   },
-  data () {
+  data() {
     return {
       chart: null,
       hasData: false,
@@ -44,7 +38,7 @@ export default {
       customTheme: state => state.pageInfo.pageConfig.customTheme,
       activeCode: state => state.activeCode
     }),
-    chatId () {
+    chatId() {
       let prefix = 'chart_'
       if (this.$route.path === window?.BS_CONFIG?.routers?.previewUrl) {
         prefix = 'preview_chart_'
@@ -60,29 +54,29 @@ export default {
       return prefix + this.config.code
     }
   },
-  created () {
+  created() {
     this.plotList = [...this.plotList, ...getCustomPlots()]
   },
   watch: {
     // 监听主题变化手动触发组件配置更新
     'config.option.theme': {
-      handler (val) {
+      handler(val) {
         if (val) {
           this.changeStyle(this.config, true)
         }
       }
     }
   },
-  mounted () {
+  mounted() {
   },
-  beforeDestroy () {
+  beforeDestroy() {
     if (this.chart) {
       this.chart.destroy()
     }
   },
   methods: {
     ...mapMutations('bigScreen', ['changeChartConfig', 'changeActiveItemConfig', 'changeChartLoading']),
-    chartInit () {
+    chartInit() {
       let config = this.config
       // key和code相等，说明是一进来刷新，调用list接口
       if (this.config.code === this.config.key || this.isPreview) {
@@ -113,7 +107,7 @@ export default {
     /**
      * 构造chart
      */
-    newChart (config) {
+    newChart(config) {
       this.chart = new g2Plot[config.chartType](this.chatId, {
         renderer: 'canvas',
         // 仪表盘缩放状态下，点击准确
@@ -126,7 +120,7 @@ export default {
     /**
      * 注册事件
      */
-    registerEvent () {
+    registerEvent() {
       // 图表添加事件进行数据联动
       let formData = {}
       // eslint-disable-next-line no-unused-vars
@@ -136,11 +130,13 @@ export default {
       })
       // eslint-disable-next-line no-unused-vars
       this.chart.on('plot:click', (...args) => {
-        this.linkage(formData)
+        formData.date=[formData.date]
+        this.linkage(formData);
+
       })
     },
     // 将config.setting的配置转化为option里的配置，这里之所以将转化的方法提出来，是因为在改变维度指标和样式的时候都需要转化
-    transformSettingToOption (config, type) {
+    transformSettingToOption(config, type) {
       let option = null
       config.setting.forEach(set => {
         if (set.optionField) {
@@ -166,7 +162,7 @@ export default {
       })
       return config
     },
-    dataFormatting (config, data) {
+    dataFormatting(config, data) {
       // 数据返回成功则赋值
       if (data.success) {
         data = data.data || []
@@ -215,7 +211,7 @@ export default {
       return config
     },
     // 组件的样式改变，返回改变后的config
-    changeStyle (config, isUpdateTheme) {
+    changeStyle(config, isUpdateTheme) {
       config = { ...this.config, ...config }
       config = this.transformSettingToOption(config, 'custom')
       // 这里定义了option和setting是为了保证在执行eval时,optionHandler、dataHandler里面可能会用到，
@@ -248,12 +244,13 @@ export default {
 
 <style lang="scss" scoped>
 @import '../assets/style/echartStyle';
-.light-theme{
+
+.light-theme {
   background-color: #ffffff;
   color: #000000;
 }
-.auto-theme{
+
+.auto-theme {
   background-color: transparent;
 }
-
 </style>

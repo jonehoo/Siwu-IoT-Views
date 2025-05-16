@@ -38,7 +38,14 @@ export function getInfo() {
     method: 'get'
   })
 }
-
+// 微信登录
+export function wxLogin(query) {
+  return request({
+    url: '/dynamic-login',
+    method: 'get',
+    params: query
+  })
+}
 // 退出方法
 export function logout() {
   return request({

@@ -119,7 +119,6 @@ export default {
      */
     chartInit() {
       let config = this.config
-      console.log('this.config: ', this.config);
       // key和code相等，说明是一进来刷新，调用list接口
       if (this.isPreview) {
         // 改变样式

@@ -13,7 +13,7 @@
             <ul class="list-group list-group-striped">
               <li class="list-group-item">
                 <svg-icon icon-class="user" />用户名称
-                <div class="pull-right">{{ user.userName }}</div>
+                <div class="pull-right">{{ user.nickName }}</div>
               </li>
               <li class="list-group-item">
                 <svg-icon icon-class="phone" />手机号码

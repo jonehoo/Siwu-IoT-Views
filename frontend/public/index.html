@@ -1,397 +1,161 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="renderer" content="webkit">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-  <title> 
-    <%= webpackConfig.name %>
-  </title>
-  <script src="https://sv.jinhuwl.top:5743/prod-api/static/JS-CDN/three/build/three.min.js"></script>
-  <script src="https://sv.jinhuwl.top:5743/prod-api/static/JS-CDN/three/examples/js/loaders/GLTFLoader.js"></script>
-  <script src="https://sv.jinhuwl.top:5743/prod-api/static/JS-CDN/three/examples/js/loaders/RGBELoader.js"></script>
-  <script src="https://sv.jinhuwl.top:5743/prod-api/static/JS-CDN/three/examples/js/controls/OrbitControls.js"></script>
-  
-</head>
-      <style>
-        html,
-        body,
-        #app {
-          height: 100%;
-          margin: 0px;
-          padding: 0px;
-        }
-
-        .chromeframe {
-          margin: 0.2em 0;
-          background: #ccc;
-          color: #000;
-          padding: 0.2em 0;
-        }
-
-        #loader-wrapper {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          z-index: 999999;
-        }
-
-        #loader {
-          display: block;
-          position: relative;
-          left: 50%;
-          top: 50%;
-          width: 150px;
-          height: 150px;
-          margin: -75px 0 0 -75px;
-          border-radius: 50%;
-          border: 3px solid transparent;
-          border-top-color: #FFF;
-          -webkit-animation: spin 2s linear infinite;
-          -ms-animation: spin 2s linear infinite;
-          -moz-animation: spin 2s linear infinite;
-          -o-animation: spin 2s linear infinite;
-          animation: spin 2s linear infinite;
-          z-index: 1001;
-        }
-
-        #loader:before {
-          content: "";
-          position: absolute;
-          top: 5px;
-          left: 5px;
-          right: 5px;
-          bottom: 5px;
-          border-radius: 50%;
-          border: 3px solid transparent;
-          border-top-color: #FFF;
-          -webkit-animation: spin 3s linear infinite;
-          -moz-animation: spin 3s linear infinite;
-          -o-animation: spin 3s linear infinite;
-          -ms-animation: spin 3s linear infinite;
-          animation: spin 3s linear infinite;
-        }
-
-        #loader:after {
-          content: "";
-          position: absolute;
-          top: 15px;
-          left: 15px;
-          right: 15px;
-          bottom: 15px;
-          border-radius: 50%;
-          border: 3px solid transparent;
-          border-top-color: #FFF;
-          -moz-animation: spin 1.5s linear infinite;
-          -o-animation: spin 1.5s linear infinite;
-          -ms-animation: spin 1.5s linear infinite;
-          -webkit-animation: spin 1.5s linear infinite;
-          animation: spin 1.5s linear infinite;
-        }
-
-
-        @-webkit-keyframes spin2 {
-          0% {
-            -webkit-transform: rotate(0deg);
-            -ms-transform: rotate(0deg);
-            transform: rotate(0deg);
-          }
-
-          100% {
-            -webkit-transform: rotate(360deg);
-            -ms-transform: rotate(360deg);
-            transform: rotate(360deg);
-          }
-        }
-
-        @keyframes spin2 {
-          0% {
-            -webkit-transform: rotate(0deg);
-            -ms-transform: rotate(0deg);
-            transform: rotate(0deg);
-          }
-
-          100% {
-            -webkit-transform: rotate(360deg);
-            -ms-transform: rotate(360deg);
-            transform: rotate(360deg);
-          }
-        }
-
-
-        #loader-wrapper .loader-section {
-          position: fixed;
-          top: 0;
-          width: 51%;
-          height: 100%;
-          background: #7171C6;
-          z-index: 1000;
-          -webkit-transform: translateX(0);
-          -ms-transform: translateX(0);
-          transform: translateX(0);
-        }
-
-        #loader-wrapper .loader-section.section-left {
-          left: 0;
-        }
-
-        #loader-wrapper .loader-section.section-right {
-          right: 0;
-        }
-
-
-        .loaded #loader-wrapper .loader-section.section-left {
-          -webkit-transform: translateX(-100%);
-          -ms-transform: translateX(-100%);
-          transform: translateX(-100%);
-          -webkit-transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
-          transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
-        }
-
-        .loaded #loader-wrapper .loader-section.section-right {
-          -webkit-transform: translateX(100%);
-          -ms-transform: translateX(100%);
-          transform: translateX(100%);
-          -webkit-transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
-          transition: all 0.7s 0.3s cubic-bezier(0.645, 0.045, 0.355, 1.000);
-        }
-
-        .loaded #loader {
-          opacity: 0;
-          -webkit-transition: all 0.3s ease-out;
-          transition: all 0.3s ease-out;
-        }
-
-        .loaded #loader-wrapper {
-          visibility: hidden;
-          -webkit-transform: translateY(-100%);
-          -ms-transform: translateY(-100%);
-          transform: translateY(-100%);
-          -webkit-transition: all 0.3s 1s ease-out;
-          transition: all 0.3s 1s ease-out;
-        }
-
-        .no-js #loader-wrapper {
-          display: none;
-        }
-
-        .no-js h1 {
-          color: #222222;
-        }
-
-        #loader-wrapper .load_title {
-          font-family: 'Open Sans';
-          color: #FFF;
-          font-size: 19px;
-          width: 100%;
-          text-align: center;
-          z-index: 9999999999999;
-          position: absolute;
-          top: 60%;
-          opacity: 1;
-          line-height: 30px;
-        }
-
-        #loader-wrapper .load_title span {
-          font-weight: normal;
-          font-style: italic;
-          font-size: 13px;
-          color: #FFF;
-          opacity: 0.5;
-        }
-
-        .Loading_title_cn {
-          position: absolute;
-          left: 50%;
-          font-size: 3vh;
-          font-family: 'YouSheBiaoTiHei';
-          /* // font-family: 'Microsoft YaHei', sans-serif; */
-          top: 56%;
-          transform: translate(-50%, -50%);
-          color: #ffffff9a; 
-        }
-
-        .Loading_title_en {
-          position: absolute;
-          left: 50%;
-          font-size: 2.0vh;
-          font-family: 'YouSheBiaoTiHei';
-          top: 60%;
-          transform: translate(-50%, -50%);
-          color: #ffffff9a;
-        }
-
-        .loaderbox {
-          width: 80vw;
-          height: 90vh;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -55%);
-
-        }
-
-        .Loading_box {
-          width: 100%;
-          height: 100%;
-          position: relative;
-          background-color: #212121;
-          z-index: 9999;
-
-          &--model {
-            width: 100vw;
-            height: 100vh;
-            position: relative;
-          }
-
-          &--bar {
-            position: absolute;
-            /* // background-color: red; */
-            width: 50%;
-            height: 60px;
-            bottom: 25vh;
-            left: 50%;
-            transform: translateX(-50%);
-          }
-        }
-
-        .Loading-bar {
-          position: absolute;
-          bottom: 0;
-          /* left: 5vw; */
-          width: 100%;
-          height: 12px;
-          background: #000;
-          border-radius: 50px;
-          overflow: hidden;
-        }
-
-        .Loading-bar_inner {
-          background: #e7f4ff;
-          box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.3);
-          border-radius: 50px;
-          transition: width 0.3s ease;
-        }
-
-        .Loading-progress {
-          color: #ffffff63;
-          font-size: 11px;
-          position: absolute;
-          bottom: 22px;
-          right: 0;
-          --w: 10ch;
-          font-weight: bold;
-        }
-
-        .Loading-text {
-          /* // position: absolute;
-  // margin-left: 2%; */
-          letter-spacing: 2px;
-          color: #ffffff63;
-        }
-
-        /* From Uiverse.io by alexmaracinaru */
-        .pyramid-loader {
-          position: relative;
-          width: 300px;
-          height: 150px;
-          display: block;
-          transform-style: preserve-3d;
-          transform: rotateX(-20deg);
-        }
-
-        .wrapper {
-          position: relative;
-          width: 100%;
-          height: 100%;
-          transform-style: preserve-3d;
-          animation: spin 4s linear infinite;
-        }
-
-        @keyframes spin2 {
-          100% {
-            transform: rotateY(360deg);
-          }
-        }
-
-        .pyramid-loader .wrapper .side {
-          width: 70px;
-          height: 70px;
-          background: linear-gradient(to bottom right, #FFA500, #FF4500);
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          margin: auto;
-          transform-origin: center top;
-          clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-        }
-
-        .pyramid-loader .wrapper .side1 {
-          transform: rotateZ(-30deg) rotateY(90deg);
-          background: linear-gradient(to bottom right, #FF4500, #FFA500);
-        }
-
-        .pyramid-loader .wrapper .side2 {
-          transform: rotateZ(30deg) rotateY(90deg);
-          background: linear-gradient(to bottom right, #FFA500, #FF4500);
-        }
-
-        .pyramid-loader .wrapper .side3 {
-          transform: rotateX(30deg);
-          background: linear-gradient(to bottom right, #FFA500, #FF4500);
-        }
-
-        .pyramid-loader .wrapper .side4 {
-          transform: rotateX(-30deg);
-          background: linear-gradient(to bottom right, #FF4500, #FFA500);
-        }
-
-        .pyramid-loader .wrapper .shadow {
-          width: 60px;
-          height: 60px;
-          background: #FF8C00;
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          margin: auto;
-          transform: rotateX(90deg) translateZ(-40px);
-          filter: blur(12px);
-        }
-      </style>
-</head>
-
-<body>
-  <div id="app">
-    <div class="Loading_box">
-      <div class='Loading_title_cn'>正在加载系统资源，请耐心等待</div>
-      <div class='Loading_title_en'>Loading system resources, please be patient</div>
-      <!-- <div class="Loading_box--model" ref="LoadingContainer"></div> -->
-      <div class="loaderbox">
-        <div class="pyramid-loader">
-          <div class="wrapper">
-            <span class="side side1"></span>
-            <span class="side side2"></span>
-            <span class="side side3"></span>
-            <span class="side side4"></span>
-            <span class="shadow"></span>
-          </div>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+    <title><%= webpackConfig.name %></title>
+    <!--[if lt IE 11]><script>window.location.href='/html/ie.html';</script><![endif]-->
+    <script src="https://sv.jinhuwl.top:5743/prod-api/static/JS-CDN/three/build/three.min.js"></script>
+    <script src="https://sv.jinhuwl.top:5743/prod-api/static/JS-CDN/three/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://sv.jinhuwl.top:5743/prod-api/static/JS-CDN/three/examples/js/loaders/RGBELoader.js"></script>
+    <script src="https://sv.jinhuwl.top:5743/prod-api/static/JS-CDN/three/examples/js/controls/OrbitControls.js"></script>
+    <style>
+    html,
+    body,
+    #app {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    
+    /* 简化加载器样式 */
+    #loader-wrapper {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 999999;
+      background: #181818;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+    }
+    
+    /* 使用CSS变量便于修改 */
+    :root {
+      --loader-color: #FFF;
+      --loader-size: 80px;
+      --loader-speed: 1.5s;
+    }
+    
+    /* 简化加载动画 */
+    .loader {
+      width: var(--loader-size);
+      height: var(--loader-size);
+      border: 4px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      border-top-color: var(--loader-color);
+      animation: spin var(--loader-speed) linear infinite;
+      position: relative;
+      margin-bottom: 20px;
+    }
+    
+    /* 添加进度百分比 */
+    .loader-progress {
+      color: var(--loader-color);
+      font-size: 14px;
+      margin-top: 10px;
+    }
+    
+    /* 优化标题样式 */
+    .load-title {
+      font-family: 'Open Sans', sans-serif;
+      color: var(--loader-color);
+      font-size: 1.2rem;
+      margin-top: 20px;
+      text-align: center;
+      max-width: 80%;
+      line-height: 1.5;
+    }
+    
+    .load-title span {
+      display: block;
+      font-weight: normal;
+      font-style: italic;
+      font-size: 0.9rem;
+      opacity: 0.8;
+      margin-top: 5px;
+    }
+    
+    /* 优化动画性能 */
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    /* 加载完成状态 */
+    .loaded #loader-wrapper {
+      opacity: 0;
+      visibility: hidden;
+    }
+    
+    /* 响应式调整 */
+    @media (max-width: 768px) {
+      :root {
+        --loader-size: 60px;
+      }
+      
+      .load-title {
+        font-size: 1rem;
+      }
+      
+      .load-title span {
+        font-size: 0.8rem;
+      }
+    }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div id="loader-wrapper">
+        <div class="loader"></div>
+        <div class="loader-progress">0%</div>
+        <div class="load-title">
+          正在加载系统资源
+          <!-- <span>请耐心等待...</span> -->
         </div>
       </div>
-
     </div>
-  </div>
-</body>
-
+    
+    <script>
+      // 添加简单的加载进度模拟
+      document.addEventListener('DOMContentLoaded', function() {
+        const loader = document.querySelector('.loader');
+        const progressElement = document.querySelector('.loader-progress');
+        let progress = 0;
+        
+        // 模拟加载进度
+        const interval = setInterval(() => {
+          progress += Math.random() * 10;
+          if (progress >= 100) {
+            progress = 100;
+            clearInterval(interval);
+            
+            // 加载完成后添加loaded类
+            setTimeout(() => {
+              document.body.classList.add('loaded');
+            }, 500);
+          }
+          
+          progressElement.textContent = Math.min(progress, 100) + '%';
+        }, 300);
+        
+        // 如果页面完全加载完成但进度还没到100%，直接完成
+        window.addEventListener('load', function() {
+          progressElement.textContent = '100%';
+          clearInterval(interval);
+          setTimeout(() => {
+            document.body.classList.add('loaded');
+          }, 1000);
+        });
+      });
+    </script>
+  </body>
 </html>

@@ -305,7 +305,7 @@ export default {
         { label: 'ClickHouse', code: 'clickhouse', name: 'ru.yandex.clickhouse.ClickHouseDriver', url: 'jdbc:clickhouse://localhost:8123/db_name' },
         { label: 'PostgreSQL', code: 'postgresql', name: 'org.postgresql.Driver', url: 'jdbc:postgresql://localhost:13308/db_name' },
         { label: 'Oracle', code: 'oracle', name: 'oracle.jdbc.driver.OracleDriver', url: 'jdbc:oracle:thin:@localhost:1521:orcl' },
-        { label: 'Sqlserver', code: 'sqlserver', name: 'com.microsoft.sqlserver.jdbc.SQLServerDriver', url: 'jdbc:sqlserver://localhost:1433;databaseName=db_name' }
+        { label: 'Sqlserver', code: 'sqlserver', name: 'com.microsoft.sqlserver.jdbc.SQLServerDriver', url: 'jdbc:sqlserver://localhost:1433;databaseName=db_name' },
       ]
     }
   },

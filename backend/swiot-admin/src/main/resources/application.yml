@@ -9,7 +9,7 @@ SiWu:
   # 获取ip地址开关
   addressEnabled: true
   # 验证码类型 math 数字计算 char 字符验证
-  captchaType: math
+  captchaType: char
 # 大屏配置
 
 gc:
@@ -59,7 +59,7 @@ spring:
     # 国际化资源文件路径
     basename: i18n/messages
   profiles:
-    active: prod
+    active: dev
   # 文件上传
   servlet:
     multipart:

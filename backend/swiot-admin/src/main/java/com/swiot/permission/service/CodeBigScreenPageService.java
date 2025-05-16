@@ -51,6 +51,9 @@ public class CodeBigScreenPageService {
                 .map(BigScreenShare::getCode)
                 .collect(Collectors.toList());
     }
+    //向分享表里面插入数据
+
+
 
     public List<String> getAllDataRoomCodeListByCreateBy(String createBy) {
         // 使用 MyBatis-Plus 的 QueryWrapper 创建查询条件

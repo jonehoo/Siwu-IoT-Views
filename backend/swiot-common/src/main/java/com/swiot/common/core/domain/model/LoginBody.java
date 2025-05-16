@@ -12,6 +12,8 @@ public class LoginBody
      */
     private String username;
 
+    private String nickname;
+
     /**
      * 用户密码
      */
@@ -32,9 +34,19 @@ public class LoginBody
         return username;
     }
 
+    public String getNickname()
+    {
+        return nickname;
+    }
+
     public void setUsername(String username)
     {
         this.username = username;
+    }
+
+    public void setNickname(String nickname)
+    {
+        this.nickname = nickname;
     }
 
     public String getPassword()
