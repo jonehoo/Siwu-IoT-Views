@@ -130,7 +130,13 @@ export default {
       })
       // eslint-disable-next-line no-unused-vars
       this.chart.on('plot:click', (...args) => {
-        formData.date=[formData.date]
+        // formData.date=[formData.date]
+        // 转换所有属性值为数组
+        for (const key in formData) {
+          if (formData.hasOwnProperty(key)) {
+            formData[key] = [formData[key]];
+          }
+        }
         this.linkage(formData);
 
       })

@@ -224,6 +224,7 @@ export default {
           }
           this.loginForm.password = this.loginForm.password;
           this.$store.dispatch("Login", this.loginForm).then(() => {
+
             this.$router.push({ path: this.redirect || "/" }).catch(() => { });
           }).catch(() => {
             this.loading = false;

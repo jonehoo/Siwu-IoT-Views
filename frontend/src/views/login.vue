@@ -144,11 +144,13 @@ export default {
       redirect: undefined
     }
   },
-  $route: {
-    handler: function (route) {
-      this.redirect = route.query && route.query.redirect;
-    },
-    immediate: true
+  watch: {
+    $route: {
+      handler: function (route) {
+        this.redirect = route.query && route.query.redirect;
+      },
+      immediate: true
+    }
   },
   mounted() {
     this.checkScreenSize();
@@ -197,12 +199,11 @@ export default {
         }
 
         // 调用登录API
-        await this.$store.dispatch("Login", this.loginForm);
-
-        // 登录成功处理
-        this.$message.success('登录成功');
-        this.$router.push({ path: this.redirect || "/" });
-
+        // await this.$store.dispatch("Login", this.loginForm);
+        this.$store.dispatch("Login", this.loginForm).then(() => {
+          this.$message.success('登录成功');
+          this.$router.push({ path: this.redirect || "/" }).catch(() => { });
+        })
       } catch (error) {
         // 错误处理
         console.error('登录失败:', error);

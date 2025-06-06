@@ -443,6 +443,45 @@ const setting = [
     value: [0, 0, 0, 0],
     tabName: 'custom',
     groupName: 'appendPadding'
+  },
+  // 新增的缩略轴配置
+  {
+    label: '显示缩略轴',
+    type: 'switch',
+    field: 'sliderEnable',
+    optionField: 'sliderEnable',
+    value: false,
+    active: true,
+    inactive: false,
+    tabName: 'custom',
+    groupName: 'slider'
+  },
+  {
+    label: '缩略轴高度',
+    type: 'inputNumber',
+    field: 'slider_height',
+    optionField: 'slider.height',
+    value: 26,
+    tabName: 'custom',
+    groupName: 'slider'
+  },
+  {
+    label: '背景颜色',
+    type: 'colorPicker',
+    field: 'slider_backgroundStyle_fill',
+    optionField: 'slider.backgroundStyle.fill',
+    value: '#2C3542',
+    tabName: 'custom',
+    groupName: 'slider'
+  },
+  {
+    label: '滑块颜色',
+    type: 'colorPicker',
+    field: 'slider_handlerStyle_fill',
+    optionField: 'slider.handlerStyle.fill',
+    value: '#434343',
+    tabName: 'custom',
+    groupName: 'slider'
   }
 ]
 
@@ -468,6 +507,22 @@ if(autoHide){
   }
 } else {
   option.xAxis.label.autoHide = false
+} 
+  // 在 optionHandler 中添加以下代码
+if (option.sliderEnable) {
+  option.slider = {
+    height: setting.find(settingItem => settingItem.field === 'slider_height').value,
+    start: 0,
+    end: 1,
+    backgroundStyle: {
+      fill: setting.find(settingItem => settingItem.field === 'slider_backgroundStyle_fill').value
+    },
+    handlerStyle: {
+      fill: setting.find(settingItem => settingItem.field === 'slider_handlerStyle_fill').value
+    }
+  }
+} else {
+  option.slider = false
 }
   `
 
@@ -476,6 +531,8 @@ const dataHandler = ''
 
 // 图表配置 new Line('domName', option)
 const option = {
+    // 添加缩略轴默认配置
+  sliderEnable: false,
   // 数据将要放入到哪个字段中
   dataKey: 'data',
   // 图表内边距
