@@ -17,6 +17,16 @@ const name = 'JICHUPUBUTU'
 
 // 右侧配置项
 const setting = [
+  //   {
+  //   label: '数据标签格式化',
+  //   type: 'input',
+  //   field: 'label_formatter', // 新增字段
+  //   optionField: 'label.formatter', // 对应options中的字段
+  //   value: '',
+  //   placeholder: '例如: (v) => `${v}元`',
+  //   tabName: 'custom',
+  //   groupName: 'graph'
+  // },
   {
     label: '维度',
     type: 'select', // 设置组件类型
@@ -476,7 +486,7 @@ const setting = [
 
 // 模拟数据
 const data = [
-  { type: '日用品', money: 120 },
+  { type: '日用品', money: 120.03 },
   { type: '伙食费', money: 900 },
   { type: '交通费', money: 200 },
   { type: '水电费', money: 300 },
@@ -510,7 +520,7 @@ const option = {
   },
 
   label: {
-    offsetY: 13,
+    offsetY: 20,
     // 可手动配置 label 数据标签位置
     position: 'middle', // 'top', 'bottom', 'middle',
     // 配置样式
@@ -519,7 +529,12 @@ const option = {
       opacity: 0,
       fontSize: 12
     },
-    layout: [{ type: 'interval-adjust-position' }]
+     // 新增 formatter 配置
+     formatter: (v) => {
+      console.log('版本：20250606: ', v);
+       return v.$$absoluteField$$.toFixed(2);
+     }
+    // layout: [{ type: 'interval-adjust-position' }]
   },
   xAxis: {
     title: {
@@ -577,12 +592,13 @@ const option = {
     },
     label: {
       formatter: (v) => {
-        if (v < 1e3) return v
-        // 数值格式化为千分位
-        if (v >= 1e3 && v < 1e6) return `${v}`.replace(/\d{1,3}(?=(\d{3})+$)/g, (s) => `${s},`)
-        if (v >= 1e6 && v < 1e9) return `${(v / 1e6).toFixed(1)} M`
-        if (v >= 1e9 && v < 1e12) return `${(v / 1e9).toFixed(1)} B`
-        return `${(v / 10e8).toFixed(1)} B`
+        return v
+        // if (v < 1e3) return v
+        // // 数值格式化为千分位
+        // if (v >= 1e3 && v < 1e6) return `${v}`.replace(/\d{1,3}(?=(\d{3})+$)/g, (s) => `${s},`)
+        // if (v >= 1e6 && v < 1e9) return `${(v / 1e6).toFixed(1)} M`
+        // if (v >= 1e9 && v < 1e12) return `${(v / 1e9).toFixed(1)} B`
+        // return `${(v / 10e8).toFixed(1)} B`
       },
       style: {
         fill: '#e9e9e9',
@@ -602,7 +618,8 @@ const option = {
       alias: '类别'
     },
     sales: {
-      alias: '销售额'
+      alias: '销售额',
+      formatter: (v) => `${v} 元`,
     }
   }
 }

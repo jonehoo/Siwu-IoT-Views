@@ -178,7 +178,7 @@ public class TokenService
     {
         String token = Jwts.builder()
                 .setClaims(claims)
-                .signWith(SignatureAlgorithm.HS512, secret).compact();
+                .signWith(SignatureAlgorithm.HS256, secret).compact();
         return token;
     }
 

@@ -88,7 +88,7 @@ token:
   # 令牌密钥
   secret: mnopqrstuvwxyzabcdefghijkl
   # 令牌有效期（默认30分钟）
-  expireTime: 300000
+  expireTime: 30
 jackson:
   time-zone: GMT+8
   date-format: yyyy-MM-dd HH:mm:ss

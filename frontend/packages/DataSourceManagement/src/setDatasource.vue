@@ -54,41 +54,86 @@
             maxlength="200"
           />
         </el-form-item>
-        <el-form-item
-          label="JDBC URL"
-          prop="url"
-        >
-          <el-input
-            v-model="dataForm.url"
-            placeholder="请输入JDBC URL"
-            class="bs-el-input"
-            type="textarea"
-            rows="4"
-            @keydown.enter.native="textareaKeydown"
-          />
-        </el-form-item>
-        <el-form-item
-          label="用户名"
-          prop="username"
-        >
-          <el-input
-            v-model="dataForm.username"
-            placeholder="请输入用户名"
-            class="bs-el-input"
-          />
-        </el-form-item>
-        <el-form-item
-          label="密码"
-          prop="password"
-        >
-          <el-input
-            v-model="dataForm.password"
-            :placeholder="dataForm.id ? '请输入密码，不输入代表不更新' : '请输入密码'"
-            class="bs-el-input"
-            type="password"
-            show-password
-          />
-        </el-form-item>
+
+        <!-- Excel 数据源特定字段 -->
+        <template v-if="dataForm.sourceType === 'xlxs'">
+          <el-form-item
+            label="Excel 文件"
+            prop="config"
+          >
+            <el-upload
+              ref="upload"
+              class="upload-demo"
+              :action="uploadUrl"
+              :headers="uploadHeaders"
+              :file-list="fileList"
+              :on-success="handleUploadSuccess"
+              :before-upload="beforeUpload"
+              :limit="1"
+              :on-exceed="handleExceed"
+              accept=".xlsx,.xls,.csv"
+            >
+              <el-button
+                size="small"
+                type="primary"
+              >点击上传</el-button>
+              <div
+                slot="tip"
+                class="el-upload__tip"
+              >只能上传 xlsx/xls/csv 文件，且不超过10MB</div>
+            </el-upload>
+          </el-form-item>
+          <el-form-item
+            label="表头行号"
+            prop="headerRowNum"
+          >
+            <el-input-number
+              v-model="dataForm.headerRowNum"
+              :min="1"
+              :max="10"
+            />
+          </el-form-item>
+        </template>
+
+        <!-- 常规数据库连接字段 -->
+        <template v-else>
+          <el-form-item
+            label="JDBC URL"
+            prop="url"
+          >
+            <el-input
+              v-model="dataForm.url"
+              placeholder="请输入JDBC URL"
+              class="bs-el-input"
+              type="textarea"
+              rows="4"
+              @keydown.enter.native="textareaKeydown"
+            />
+          </el-form-item>
+          <el-form-item
+            label="用户名"
+            prop="username"
+          >
+            <el-input
+              v-model="dataForm.username"
+              placeholder="请输入用户名"
+              class="bs-el-input"
+            />
+          </el-form-item>
+          <el-form-item
+            label="密码"
+            prop="password"
+          >
+            <el-input
+              v-model="dataForm.password"
+              :placeholder="dataForm.id ? '请输入密码，不输入代表不更新' : '请输入密码'"
+              class="bs-el-input"
+              type="password"
+              show-password
+            />
+          </el-form-item>
+        </template>
+
         <el-form-item
           label="备注"
           prop="remark"
@@ -211,6 +256,8 @@
 
 <script>
 import { checkRepeat, sourceLinkTest, add, update } from 'data-room-ui/js/utils/dataSourceService'
+import { getToken } from '@/utils/auth'
+
 export default {
   props: {
     appCode: {
@@ -223,6 +270,9 @@ export default {
       setDatasourceVisible: false,
       title: '',
       linkLoading: false,
+      fileList: [],
+      uploadUrl: process.env.VUE_APP_BASE_API + '/common/upload', // 若依上传接口
+      uploadHeaders: { jettaauthtoken: 'Bearer ' + getToken() },
       dataForm: {
         id: '',
         sourceName: '',
@@ -231,7 +281,11 @@ export default {
         username: '',
         password: '',
         url: 'jdbc:mysql://localhost:3306/db_name?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8&useSSL=false&useOldAliasMetadataBehavior=true',
-        remark: ''
+        remark: '',
+        // Excel 特定字段
+        config: null,
+        headerRowNum: 1,
+        // 其他字段...
       },
       rules: {
         sourceType: [
@@ -271,6 +325,13 @@ export default {
         ],
         coding: [
           { required: true, message: '请选择编码', trigger: 'blur' }
+        ],
+        // Excel 特定验证规则
+        config: [
+          { required: true, message: '请上传 Excel 文件', trigger: 'blur' }
+        ],
+        headerRowNum: [
+          { required: true, message: '请输入表头行号', trigger: 'blur' }
         ]
       },
       updateRules: {
@@ -294,19 +355,29 @@ export default {
         username: [
           { required: true, message: '请输入用户名', trigger: 'blur' },
           { pattern: /^[^\u4e00-\u9fa5]+$/, message: '用户名不能包含汉字' }
+        ],
+        // Excel 特定验证规则
+        config: [
+          { required: true, message: '请上传 Excel 文件', trigger: 'blur' }
+        ],
+        headerRowNum: [
+          { required: true, message: '请输入表头行号', trigger: 'blur' }
         ]
       }
     }
   },
   computed: {
     sourceTypeList () {
-      return window.BS_CONFIG?.sourceTypeList || [
+      return  [
         { label: 'Mysql', code: 'mysql', name: 'com.mysql.jdbc.Driver', url: 'jdbc:mysql://localhost:3306/db_name?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8&useSSL=false&useOldAliasMetadataBehavior=true' },
         { label: 'ClickHouse', code: 'clickhouse', name: 'ru.yandex.clickhouse.ClickHouseDriver', url: 'jdbc:clickhouse://localhost:8123/db_name' },
         { label: 'PostgreSQL', code: 'postgresql', name: 'org.postgresql.Driver', url: 'jdbc:postgresql://localhost:13308/db_name' },
         { label: 'Oracle', code: 'oracle', name: 'oracle.jdbc.driver.OracleDriver', url: 'jdbc:oracle:thin:@localhost:1521:orcl' },
         { label: 'Sqlserver', code: 'sqlserver', name: 'com.microsoft.sqlserver.jdbc.SQLServerDriver', url: 'jdbc:sqlserver://localhost:1433;databaseName=db_name' },
-      ]
+        { label: 'Sqllite', code: 'sqllite', name: 'org.sqlite.JDBC', url: 'jdbc:sqlite:/path/to/database.db' },
+        { label: 'TDengine', code: 'tdengine', name: 'com.taosdata.jdbc.TSDBDriver', url: 'jdbc:TAOS://taosdemo.com:6030/test?user=root&password=taosdata' },
+        { label: 'Excel 文件', code: 'xlxs', name: 'excel', url: '' }
+      ]                                               
     }
   },
   methods: {
@@ -318,6 +389,28 @@ export default {
       }
       if (row && row.id) {
         this.dataForm = row
+        // 如果是 Excel 数据源且已有文件，初始化文件列表
+        if (row.sourceType === 'excel' && row.config) {
+          this.fileList = [{
+            name: row.config.name || '已上传文件',
+            url: row.config.url
+          }]
+        }
+      } else {
+        // 重置表单
+        this.dataForm = {
+          id: '',
+          sourceName: '',
+          sourceType: 'mysql',
+          driverClassName: 'com.mysql.jdbc.Driver',
+          username: '',
+          password: '',
+          url: 'jdbc:mysql://localhost:3306/db_name?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8&useSSL=false&useOldAliasMetadataBehavior=true',
+          remark: '',
+          config: null,
+          headerRowNum: 1
+        }
+        this.fileList = []
       }
     },
     // 名称校验
@@ -337,8 +430,16 @@ export default {
     // 数据源类型选择
     sourceTypeChange (code) {
       if (!this.dataForm.id && code) {
-        this.dataForm.driverClassName = this.sourceTypeList.find(item => item.code === code)?.name
-        this.$set(this.dataForm, 'url', this.sourceTypeList.find(item => item.code === code)?.url)
+        const selectedType = this.sourceTypeList.find(item => item.code === code)
+        this.dataForm.driverClassName = selectedType?.name || ''
+        this.$set(this.dataForm, 'url', selectedType?.url || '')
+        
+        // 如果是 Excel 类型，重置相关字段
+        if (code === 'excel') {
+          this.dataForm.username = ''
+          this.dataForm.password = ''
+          this.dataForm.url = ''
+        }
       }
     },
     // 阻止文本域回车换行
@@ -358,6 +459,11 @@ export default {
           return false
         } else {
           if (flag === 0) {
+            // Excel 数据源不需要测试连接
+            if (this.dataForm.sourceType === 'excel') {
+              this.$message.success('Excel 数据源无需测试连接')
+              return
+            }
             this.sourceLinkTest(this.dataForm)
           }
         }
@@ -383,51 +489,76 @@ export default {
         username: '',
         password: '',
         url: 'jdbc:mysql://localhost:3306/db_name?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8&useSSL=false&useOldAliasMetadataBehavior=true',
-        remark: ''
+        remark: '',
+        config: null,
+        headerRowNum: 1
       }
+      this.fileList = []
       this.setDatasourceVisible = false
     },
     // 保存
     submitForm () {
-      // mysql 需要包含useOldAliasMetadataBehavior
-      // if (this.dataForm.sourceType == 'Mysql') {
-      //   if (this.dataForm.url.indexOf('useOldAliasMetadataBehavior') == -1) {
-      //     if (this.dataForm.url.indexOf('?') == -1) {
-      //       this.dataForm.url = this.dataForm.url + '?useOldAliasMetadataBehavior=true'
-      //     } else {
-      //       this.dataForm.url = this.dataForm.url + '&useOldAliasMetadataBehavior=true'
-      //     }
-      //   }
-      // }
       this.$refs.dataForm.validate((valid) => {
         if (valid) {
-          if (this.dataForm.id) {
-            update({
-              ...this.dataForm,
-              moduleCode: this.appCode,
-              editable: this.appCode ? 1 : 0
-            }).then(() => {
-              this.$message.success('保存成功')
-              // 刷新表格
-              this.$emit('refreshTable')
-              this.handleClose()
-            })
-          } else {
-            add({
-              ...this.dataForm,
-              moduleCode: this.appCode,
-              editable: this.appCode ? 1 : 0
-            }).then(() => {
-              this.$message.success('保存成功')
-              // 刷新表格
-              this.$emit('refreshTable')
-              this.handleClose()
-            })
+          const formData = {
+            ...this.dataForm,
+            moduleCode: this.appCode,
+            editable: this.appCode ? 1 : 0
           }
+          
+          // 如果是 Excel 数据源，需要特殊处理
+          if (this.dataForm.sourceType === 'excel') {
+            if (!this.dataForm.config) {
+              this.$message.error('请上传 Excel 文件')
+              return
+            }
+          }
+          
+          const saveMethod = this.dataForm.id ? update : add
+          saveMethod(formData).then(() => {
+            this.$message.success('保存成功')
+            // 刷新表格
+            this.$emit('refreshTable')
+            this.handleClose()
+          })
         } else {
           return false
         }
       })
+    },
+    // 文件上传前校验
+    beforeUpload (file) {
+      const isExcel = file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' || 
+                     file.type === 'application/vnd.ms-excel'
+      const isCsv = file.type === 'text/csv'
+      const isLt10M = file.size / 1024 / 1024 < 10
+      
+      if (!isExcel && !isCsv) {
+        this.$message.error('只能上传 Excel 或 CSV 文件')
+        return false
+      }
+      if (!isLt10M) {
+        this.$message.error('上传文件大小不能超过 10MB')
+        return false
+      }
+      return true
+    },
+    // 文件上传成功
+    handleUploadSuccess (response, file, fileList) {
+      if (response.code !== 200) {
+        this.$message.error(response.msg || '上传失败')
+        return
+      }
+      this.dataForm.config = {
+        name: file.name,
+        url: response.url,
+        path: response.fileName
+      }
+      this.fileList = fileList
+    },
+    // 文件超出限制
+    handleExceed (files, fileList) {
+      this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
     }
   }
 }
@@ -435,4 +566,13 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../assets//style/bsTheme.scss';
+
+.upload-demo {
+  ::v-deep .el-upload {
+    width: 100%;
+    .el-button {
+      width: 100%;
+    }
+  }
+}
 </style>

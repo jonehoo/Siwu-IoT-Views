@@ -134,7 +134,10 @@ export default {
         // 转换所有属性值为数组
         for (const key in formData) {
           if (formData.hasOwnProperty(key)) {
+            //修复频繁点击弹出警告的问题
+            if(typeof(formData[key])==="string"){
             formData[key] = [formData[key]];
+            }
           }
         }
         this.linkage(formData);
