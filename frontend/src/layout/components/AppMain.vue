@@ -34,8 +34,7 @@ export default {
   position: relative;
   overflow: hidden;
   padding: 12px;
-  // background-color: var(--db-background-appmain);
-  background-color: #151a26;
+  background-color: #fff;
 }
 
 .fixed-header + .app-main {

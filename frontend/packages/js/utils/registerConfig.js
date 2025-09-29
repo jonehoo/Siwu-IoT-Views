@@ -144,14 +144,14 @@ function registerTheme (config) {
   const defaultTheme = {
     '--db-background-appmain': '#f0f2f5',
     '--bs-el-color-primary': '#409EFF', // elment-ui主题色，激活
-    '--bs-background-1': '#151a26', // 整体背景色
-    '--bs-background-2': '#232832', // 布局背景色
-    '--bs-el-background-1': '#151A26', // 组件背景色，输入框...
-    '--bs-el-background-2': '#35393F', // 组件背景色，按钮、分页、加载...
-    '--bs-el-background-3': '#303640', // 组件背景色，表格头部、下拉框hover...
-    '--bs-el-title': '#ffffff', // 标题字体颜色
-    '--bs-el-text': '#ffffff', // 一般字体颜色
-    '--bs-el-border': 'transparent', // 边框颜色
+    '--bs-background-1': '#f5f6fa', // 整体背景色
+    '--bs-background-2': '#ffffff', // 布局背景色
+    '--bs-el-background-1': '#ffffff', // 组件背景色，输入框...
+    '--bs-el-background-2': '#f5f6fa', // 组件背景色，按钮、分页、加载...
+    '--bs-el-background-3': '#e0e0e0', // 组件背景色，表格头部、下拉框hover...
+    '--bs-el-title': '#333333', // 标题字体颜色
+    '--bs-el-text': '#222222', // 一般字体颜色
+    '--bs-el-border': '#e0e0e0', // 边框颜色
     '--bs-el-color-primary-active': '64, 158, 255'
   }
   const customTheme= {

@@ -1,5 +1,5 @@
 <template>
-  <div :class="classObj" class="app-wrapper" :style="{'--current-color': theme}">
+  <div :class="['app-wrapper', classObj, 'bs-light-theme']" :style="{'--current-color': theme}">
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside"/>
     <sidebar v-if="!sidebar.hide" class="sidebar-container"/>
     <div  :class="{hasTagsView:needTagsView,sidebarHide:sidebar.hide}" class="main-container">
@@ -51,7 +51,7 @@ export default {
       }
     },
     variables() {
-      return variables;
+      return variables
     }
   },
   methods: {

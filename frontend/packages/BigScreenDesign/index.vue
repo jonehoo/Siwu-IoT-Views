@@ -1,16 +1,37 @@
 <template>
-  <div v-if="hasPermission" class="bs-page-design-wrap">
-    <PageTopSetting v-show="headerShow" ref="PageTopSetting" :right-fold="rightVisiable"
-      @updateRightVisiable="updateRightVisiable" @showPageInfo="showPageInfo" @changeZoom="changeScreenZoom"
-      @empty="empty" />
+  <div
+    v-if="hasPermission"
+    class="bs-page-design-wrap bs-dark-theme"
+  >
+    <PageTopSetting
+      v-show="headerShow"
+      ref="PageTopSetting"
+      :right-fold="rightVisiable"
+      @updateRightVisiable="updateRightVisiable"
+      @showPageInfo="showPageInfo"
+      @changeZoom="changeScreenZoom"
+      @empty="empty"
+    />
     <div class="drag-wrap">
       <!-- 左侧面板 -->
-      <LeftPanel :header-show="headerShow" :height="height" @openRightPanel="openRightPanel" @openResource="initDialog"
-        @openComponent="openComponent" @toggleLeftSidebar="toggleLeftSidebar" />
+      <LeftPanel
+        :header-show="headerShow"
+        :height="height"
+        @openRightPanel="openRightPanel"
+        @openResource="initDialog"
+        @openComponent="openComponent"
+        @toggleLeftSidebar="toggleLeftSidebar"
+      />
       <!-- 中间组件展示面板 -->
-      <div v-loading="pageLoading" class="grid-wrap-box" :style="{
-        height: 'calc(100vh - 48px)'
-      }" tabindex="1000" @keydown="designKeydown">
+      <div
+        v-loading="pageLoading"
+        class="grid-wrap-box"
+        :style="{
+          height: 'calc(100vh - 48px)'
+        }"
+        tabindex="1000"
+        @keydown="designKeydown"
+      >
         <div id="minimap" class="minimap">
           <div class="mapHeader" id="mapHeader">
             <div>
@@ -25,12 +46,27 @@
             <div id="selectionWin" class="selectionWin" />
           </div>
         </div>
-        <SketchDesignRuler ref="Rules" :width="3000" :height="3000" :page-width="pageConfig.w"
-          :page-height="pageConfig.h" @changeStart="changeStart">
-          <MouseSelect :offset-x="offset.x" :offset-y="offset.y" @selectArea="onSelectArea">
-            <Render ref="Render" :class="{
-              'grid-bg': hasGrid
-            }" @openRightPanel="openRightPanel" @openDataViewDialog="openDataViewDialog" />
+        <SketchDesignRuler
+          ref="Rules"
+          :width="3000"
+          :height="3000"
+          :page-width="pageConfig.w"
+          :page-height="pageConfig.h"
+          @changeStart="changeStart"
+        >
+          <MouseSelect
+            :offset-x="offset.x"
+            :offset-y="offset.y"
+            @selectArea="onSelectArea"
+          >
+            <Render
+              ref="Render"
+              :class="{
+                'grid-bg': hasGrid
+              }"
+              @openRightPanel="openRightPanel"
+              @openDataViewDialog="openDataViewDialog"
+            />
           </MouseSelect>
         </SketchDesignRuler>
         <!-- <div class="footer-tools-bar">
@@ -58,9 +94,16 @@
         </div> -->
       </div>
       <!-- 右侧折叠设置面板   -->
-      <SettingPanel :header-show="headerShow" :height="height" :right-visiable.sync="rightVisiable"
-        :page-info-visiable="pageInfoVisiable" @updateSetting="updateSetting" @updateDataSetting="updateDataSetting"
-        @updatePage="updatePage" @styleHandler="styleHandler">
+      <SettingPanel
+        :header-show="headerShow"
+        :height="height"
+        :right-visiable.sync="rightVisiable"
+        :page-info-visiable="pageInfoVisiable"
+        @updateSetting="updateSetting"
+        @updateDataSetting="updateDataSetting"
+        @updatePage="updatePage"
+        @styleHandler="styleHandler"
+      >
         <template #dataSetSelect="{ value }">
           <slot name="dataSetSelect" :value="value" />
         </template>
@@ -491,6 +534,17 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+:where(.bs-dark-theme) {
+  --bs-background-1: #151a26;
+  --bs-background-2: #232832;
+  --bs-el-background-1: #151A26;
+  --bs-el-background-2: #35393F;
+  --bs-el-background-3: #303640;
+  --bs-el-title: #ffffff;
+  --bs-el-text: #ffffff;
+  --bs-el-border: transparent;
+  --bs-el-color-primary: #409EFF;
+}
 .bs-page-design-wrap {
   overflow: hidden;
 

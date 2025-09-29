@@ -9,9 +9,9 @@ spring:
         druid:
             # 主库数据源
             master:
-                url: jdbc:mysql://localhost:3306/swiot?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true&nullCatalogMeansCurrent=true
+                url: jdbc:mysql://8.137.22.58:3306/swiot?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai&rewriteBatchedStatements=true&nullCatalogMeansCurrent=true
                 username: swiot
-                password: dLZcxwsai8ZWcHG3
+                password: RTNC2rG8EJXenszK
             # 从库数据源
             slave:
                 # 从数据源开关/默认关闭

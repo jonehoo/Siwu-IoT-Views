@@ -102,9 +102,9 @@ export default {
         type: 'warning'
       }).then(() => {
         this.$store.dispatch('LogOut').then(() => {
-          location.href = '/index';
+          location.href = '/index'
         })
-      }).catch(() => {});
+      }).catch(() => {})
     }
   }
 }
@@ -113,11 +113,12 @@ export default {
 <style lang="scss" scoped>
 .navbar {
   height: 50px;
+
   overflow: hidden;
   position: relative;
   // background: #cc1515;
-  background-image: url('../../assets/images/nav_img.png'); 
-  box-shadow: 0 1px 4px rgba(0,21,41,.08);
+  background-image: url('../../assets/images/nav_img_b.png'); 
+  // box-shadow: 0 1px 4px rgba(0,21,41,.08);
 
   .hamburger-container {
     line-height: 46px;
@@ -128,7 +129,7 @@ export default {
     -webkit-tap-highlight-color:transparent;
 
     &:hover {
-      background: rgba(0, 0, 0, .025)
+      background: #f5f5f5;
     }
   }
 
@@ -160,7 +161,7 @@ export default {
       padding: 0 8px;
       height: 100%;
       font-size: 18px;
-      color: #5a5e66;
+      color: #333;
       vertical-align: text-bottom;
 
       &.hover-effect {
@@ -168,7 +169,7 @@ export default {
         transition: background .3s;
 
         &:hover {
-          background: rgba(0, 0, 0, .025)
+          background: #f5f5f5;
         }
       }
     }
