@@ -43,7 +43,7 @@ export const constantRoutes = [
   },
   {
     path: '/public/page',
-    component: () => import('@/views/custom'),
+    component: () => import('data-room-ui/BigScreenShare'),
     hidden: true
   },
   {
