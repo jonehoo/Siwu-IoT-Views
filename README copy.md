@@ -26,7 +26,7 @@
 ## ✨ 在线体验
 
 > 
-> 项目演示地址：https://sv.jinhuwl.top:5743  
+> 项目演示地址：https://dr.fvcpc.cn  
 > 扫码获取账号密码：  
 > <img src="./gitee/公众号.jpg" alt="image" width="300" height="auto">  
 > ❗ 注意：演示环境为测试环境，请不要在演示环境中放入生产数据。

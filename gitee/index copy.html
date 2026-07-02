@@ -29,7 +29,7 @@ export default {
       // 加载 HDR 天空纹理
       const rgbeLoader = new THREE.RGBELoader();
       rgbeLoader.load(
-        "https://sv.jinhuwl.top:5743/prod-api/static/sky.hdr", // 天空 HDR 图片地址
+        "https://dr.fvcpc.cn/prod-api/static/sky.hdr", // 天空 HDR 图片地址
         (texture) => {
           texture.mapping = THREE.EquirectangularReflectionMapping;
           this.scene.background = texture;
@@ -44,7 +44,7 @@ export default {
       // 加载 3D 模型
       const loader = new THREE.GLTFLoader();
       loader.load(
-        "https://sv.jinhuwl.top:5743/prod-api/static/工厂.glb", // 模型地址
+        "https://dr.fvcpc.cn/prod-api/static/工厂.glb", // 模型地址
         (gltf) => {
           // 将加载的模型添加到场景中
           this.model = gltf.scene;

@@ -40,7 +40,7 @@
 
 ## ✨ 在线体验
 
-> **项目演示地址**：[https://sv.jinhuwl.top:5743](https://sv.jinhuwl.top:5743)  
+> **项目演示地址**：[https://dr.fvcpc.cn](https://dr.fvcpc.cn)  
 > **扫码获取账号密码**：  
 > <img src="./gitee/公众号.jpg" alt="公众号二维码" width="300" height="auto">  
 > 

@@ -187,7 +187,7 @@ Spring Boot 2.5.15
 
 ### 联系方式
 - **项目地址**: https://gitee.com/jonehoo/Siwu-IoT-Views
-- **演示地址**: https://sv.jinhuwl.top:5743
+- **演示地址**: https://dr.fvcpc.cn
 - **技术支持**: 通过项目Issues提交问题
 
 ## 📄 许可证
