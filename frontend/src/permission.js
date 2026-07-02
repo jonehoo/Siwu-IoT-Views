@@ -24,7 +24,7 @@ router.beforeEach((to, from, next) => {
     if (to.path === '/login') {
       next({ path: '/' })
       NProgress.done()
-    } else if (whiteList.indexOf(to.path) !== -1) {
+    } else if (whiteList.indexOf(to.path) !== -1 || to.path.startsWith('/s/')) {
       next()
     } else {
       if (store.getters.roles.length === 0) {
@@ -49,7 +49,7 @@ router.beforeEach((to, from, next) => {
     }
   } else {
     // 没有token
-    if (whiteList.indexOf(to.path) !== -1) {
+    if (whiteList.indexOf(to.path) !== -1 || to.path.startsWith('/s/')) {
       // 在免登录白名单，直接进入
       next()
     } else {

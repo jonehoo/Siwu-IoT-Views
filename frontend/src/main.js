@@ -161,17 +161,7 @@ Vue.config.productionTip = false
 Vue.prototype.$dataRoomAxios = $dataRoomAxios
 
 
-const key = getQueryParam('key');
-
 function initializeApp() {
-  if (key) {
-    try {
-      setToken(key); 
-    } catch (error) {
-      console.error("Error storing token:", error);
-      return; 
-    }
-  }
   new Vue({
     el: '#app',
     router,

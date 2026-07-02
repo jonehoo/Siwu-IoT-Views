@@ -23,9 +23,14 @@ public class DatasetPermissionServiceImpl implements IDatasetPermissionService {
 
     @Override
     public List<String> filterByPermission(List<String> allId, List<String> datasetTypeList) {
-        System.out.println("allId:"+allId);
         // 获取当前用户的权限
-        LoginUser loginUser = SecurityUtils.getLoginUser();
+        LoginUser loginUser = null;
+        try {
+            loginUser = SecurityUtils.getLoginUser();
+        } catch (Exception e) {
+            // 未登录（分享预览等匿名访问场景），返回空列表
+            return new ArrayList<>();
+        }
         Set<String> permissions = loginUser.getPermissions();
         if (permissions.contains("*:*:*")) {
             // 若依的全部权限标识

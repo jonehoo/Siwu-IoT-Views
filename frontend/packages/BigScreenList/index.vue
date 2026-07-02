@@ -44,6 +44,9 @@
                   <div class="circle" @click="edit(screen)">
                     <span>编辑</span>
                   </div>
+                  <div class="circle" @click="share(screen)" v-if="type === 'bigScreenCatalog'">
+                    <span>分享</span>
+                  </div>
                   <div class="circle" @click="copy(screen)">
                     <span>复制</span>
                   </div>
@@ -86,12 +89,15 @@
 
     <!-- 新增或编辑弹窗 -->
     <EditForm ref="EditForm" :type="pageType" @refreshData="reSearch" />
+    <!-- 安全分享设置弹窗 -->
+    <ShareDialog ref="ShareDialog" />
   </div>
 </template>
 <script>
 import { pageMixins } from 'data-room-ui/js/mixins/page'
 import { getFileUrl } from 'data-room-ui/js/utils/file'
 import EditForm from './EditForm.vue'
+import ShareDialog from './ShareDialog.vue'
 export default {
   name: 'BigScreenList',
   mixins: [pageMixins],
@@ -105,7 +111,7 @@ export default {
       default: () => { }
     }
   },
-  components: { EditForm },
+  components: { EditForm, ShareDialog },
   data() {
     return {
       templateLoading: false,
@@ -242,6 +248,9 @@ export default {
         .catch((e) => {
           console.error(e)
         })
+    },
+    share(screen) {
+      this.$refs.ShareDialog.init(screen.code)
     },
     /**
      * 获取封面图片,如果是相对路径则拼接上文件访问前缀地址

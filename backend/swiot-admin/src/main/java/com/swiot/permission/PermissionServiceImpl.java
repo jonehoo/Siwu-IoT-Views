@@ -19,10 +19,28 @@ public class PermissionServiceImpl implements IApiPermissionService {
 
     @Override
     public boolean verifyApiPermission(HttpServletRequest request, String... permission) {
-        // 获取当前用户的权限
-        LoginUser loginUser = SecurityUtils.getLoginUser();
-        System.out.println("loginUser:"+loginUser);
-        System.out.println("request:"+request);
+        // 1. 尝试获取登录用户
+        LoginUser loginUser = null;
+        try {
+            loginUser = SecurityUtils.getLoginUser();
+        } catch (Exception e) {
+            // 未登录，继续检查是否为分享访问
+        }
+
+        // 2. 如果未登录，检查是否携带了分享临时令牌
+        if (loginUser == null) {
+            String shareAccessToken = request.getHeader("X-Share-Access-Token");
+            if (shareAccessToken == null || shareAccessToken.isEmpty()) {
+                shareAccessToken = request.getParameter("shareAccessToken");
+            }
+            // 携带了分享令牌，放行只读数据接口（具体校验由 CodePermissionServiceImpl.verifyDataPermission 负责）
+            if (shareAccessToken != null && !shareAccessToken.isEmpty()) {
+                return true;
+            }
+            return false;
+        }
+
+        // 3. 已登录用户，走正常权限校验
         Set<String> permissions = loginUser.getPermissions();
         if (permissions.contains("*:*:*")) {
             // 若依的全部权限标识
@@ -38,5 +56,3 @@ public class PermissionServiceImpl implements IApiPermissionService {
         return true;
     }
 }
-
-

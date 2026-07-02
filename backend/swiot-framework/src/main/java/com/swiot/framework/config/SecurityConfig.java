@@ -115,9 +115,11 @@ public class SecurityConfig
                         "/login",
                                 "/register",
                                 "/captchaImage",
-                                "/bigScreen/permission/check/**"
-//                                "/bigScreen/design/info/code/**",
-//                                "/bigScreen/chart/data/list"
+                                "/bigScreen/permission/check/**",
+                                "/api/public/share/**",
+                                "/bigScreen/design/info/code/**",
+                                "/bigScreen/chart/data/list",
+                                "/bigScreen/chart/data/chart"
                         )
                         .permitAll()
                     // 静态资源，可匿名访问
