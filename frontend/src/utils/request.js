@@ -29,6 +29,9 @@ service.interceptors.request.use(async config => {
   if (getToken() && !isToken) {
     config.headers['AuthToken'] = 'Bearer ' + getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
   }
+  if (window.BS_CONFIG?.httpConfigs?.headers?.['X-Share-Access-Token']) {
+    config.headers['X-Share-Access-Token'] = window.BS_CONFIG.httpConfigs.headers['X-Share-Access-Token']
+  }
   // get请求映射params参数
   if (config.method === 'get' && config.params) {
     let url = config.url + '?' + tansParams(config.params);
